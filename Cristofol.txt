@@ -1,0 +1,22 @@
+ public String enviarPost(String nombre, String telefono, String email, String observaciones) {
+
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpContext localContext = new BasicHttpContext();
+        HttpPost httpPost = new HttpPost(
+                "http://gimcristobal.esy.es/gim/PutData.php");
+        HttpResponse response = null;
+        try {
+            List<NameValuePair> params = new ArrayList<NameValuePair>(4);
+            params.add(new BasicNameValuePair("nombre", nombre));
+            params.add(new BasicNameValuePair("telefono", telefono));
+            params.add(new BasicNameValuePair("email", email));
+            params.add(new BasicNameValuePair("observaciones", observaciones));
+            params.add(new BasicNameValuePair("modo", "POST"));
+            httpPost.setEntity(new UrlEncodedFormEntity(params));
+            response = httpClient.execute(httpPost, localContext);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return response.toString();
+
+    }
